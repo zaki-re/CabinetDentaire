@@ -2,8 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Malade;
+use App\Models\Medecin;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class UserFactory extends Factory
@@ -22,11 +25,19 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $type_user = $this->faker->randomElement(['Medecin', 'Malade']);
+
         return [
-            'name' => $this->faker->name(),
+
+            'nom' => $this->faker->name,
+            'prenom' => $this->faker->firstName,
+            'address' => $this->faker->address,
+            'mobile' => $this->faker->phoneNumber,
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'type_user' => $type_user,
+            'id_med_mal' => $type_user=='Medecin' ? Medecin::factory() : Malade::factory() ,
+            'password' => Hash::make('Password'), // password
             'remember_token' => Str::random(10),
         ];
     }
