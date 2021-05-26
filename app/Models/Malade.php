@@ -9,6 +9,6 @@ class Malade extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'typeDeConsultation',
+        'type_de_consultation',
     ];
 }
