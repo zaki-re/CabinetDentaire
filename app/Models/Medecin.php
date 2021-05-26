@@ -12,5 +12,8 @@ class Medecin extends Model
         'spécialité',
 
     ];
+    public function malade(){
+        return $this->hasMany(Malade::class);
+    }
 
 }
