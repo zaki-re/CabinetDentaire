@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <link href="{{ asset('images/logo.png') }}" rel="shortcut icon" >
-    <title>Cabinet @yield('title')</title>
+    <title>@yield('title')</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 </head>
@@ -27,7 +27,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <side-nav-medecin prenom="{{ \Illuminate\Support\Facades\Auth::user()->prenom }}" nom="{{ \Illuminate\Support\Facades\Auth::user()->nom }}" type='@yield('title')' userlogo="{{ asset('images/UserMalade.png') }}" logo="{{ asset('images/logo.png') }}" ></side-nav-medecin>
+    <side-nav-medecin prenom="{{ \Illuminate\Support\Facades\Auth::user()->prenom }}" nom="{{ \Illuminate\Support\Facades\Auth::user()->nom }}" type='@yield('type')' userlogo="{{ asset('images/UserMalade.png') }}" logo="{{ asset('images/logo.png') }}" ></side-nav-medecin>
 
 
 
