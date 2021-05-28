@@ -21,6 +21,11 @@ class MaladeController extends Controller
     {
         //
     }
+    public function showProfile($id)
+    {
+        $malade=user::where('id',$id)->first();
+        return view('malade.malade_profile')->with('malade',$malade);
+    }
 
     /**
      * Show the form for creating a new resource.

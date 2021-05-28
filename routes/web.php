@@ -27,3 +27,4 @@ Route::post('/ajouter_malade', [App\Http\Controllers\Malade\MaladeController::cl
 Route::get('/historique_malade', [App\Http\Controllers\Malade\MaladeController::class, 'showHisotrique'])->name('historique.malade');
 Route::get('/getMalade', [App\Http\Controllers\Malade\MaladeController::class, 'getMalade']);
 
+Route::get('/consulter_profile/{id_malade}', [App\Http\Controllers\Malade\MaladeController::class, 'showProfile'])->name('profile.name');

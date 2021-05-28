@@ -26,6 +26,7 @@ Vue.component('footer-medecin', require('./components/MedecinComponents/FooterMe
 Vue.component('side-nav-medecin', require('./components/MedecinComponents/SideBarMedecinComponent.vue').default);
 Vue.component('ajouter-medecin', require('./components/MaladeComponents/AjouterMaladeComponent.vue').default);
 Vue.component('historique-malade', require('./components/MedecinComponents/HisotriqueMaladesComponent.vue').default);
+Vue.component('malade-profile', require('./components/MaladeComponents/MaladeProfileComponent.vue').default);
 
 
 
