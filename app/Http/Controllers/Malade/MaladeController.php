@@ -67,9 +67,21 @@ class MaladeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function getMalade()
     {
-        //
+        return User::where('id_med_mal',Auth::user()->id)->get();
+
+    }
+    /**
+     * Display the template for histrique user resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showHisotrique()
+    {
+        return view('medecin.historique_des_malades');
+
     }
 
     /**
