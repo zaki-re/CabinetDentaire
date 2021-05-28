@@ -1,6 +1,6 @@
 @extends('layouts.master')
-@section('title','Cabinet Dentaire')
 @section('type','Médical')
+@section('title','Ajouter un Malade')
 @section('content')
-    <dashboard-Medecin></dashboard-Medecin>
+    <ajouter-medecin></ajouter-medecin>
 @endsection

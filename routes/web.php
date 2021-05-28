@@ -22,5 +22,6 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [App\Http\Controllers\Medecin\MedecinController::class, 'index'])->name('dashboard.medecin');
 
-Route::get('/ajouter_malade', [App\Http\Controllers\Malade\MaladeController::class, 'index'])->name('dashboard.medecin');
+Route::get('/ajouter_malade', [App\Http\Controllers\Malade\MaladeController::class, 'create'])->name('dashboard.medecin');
+Route::post('/ajouter_malade', [App\Http\Controllers\Malade\MaladeController::class, 'store'])->name('create.malade');
 
