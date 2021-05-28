@@ -41,21 +41,24 @@ class MaladeController extends Controller
      */
     public function store(MaladeCreateRequset $request)
     {
+        if (User::where('mobile',$request->mobile)->exists()){
+            return response()->json(['status' => 0, 'error' => 'le numéro de telephone existe deja ']);
 
+        }
        $malade= User::create([
            'nom'=>$request->nom,
            'prenom'=>$request->prenom,
            'mobile'=>$request->mobile,
            'address'=>$request->address,
+           'age'=>$request->age,
             'type_user'=>'Malade',
             'id_med_mal'=>Auth::user()->id,
         ]);
-        MaladeMedecin::create([
+        return MaladeMedecin::create([
             'id_malade'=> $malade->id,
             'id_medecin'=>Auth::user()->id,
         ]);
 
-        return response()->json(['status' => 200, 'error' => 'la malade a ete correctement ajouter ']);
     }
 
     /**

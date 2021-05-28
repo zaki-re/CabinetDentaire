@@ -33,20 +33,21 @@ Vue.component('ajouter-medecin', require('./components/MaladeComponents/AjouterM
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-import swal from 'sweetalert2';
-window.swal = swal;
-const toast = swal.mixin({
+import Swal from 'sweetalert2';
+window.Swal = Swal;
+
+const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
     showConfirmButton: false,
     timer: 3000,
     timerProgressBar: true,
     didOpen: (toast) => {
-        toast.addEventListener('mouseenter', swal.stopTimer)
-        toast.addEventListener('mouseleave', swal.resumeTimer)
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
     }
-});
-window.toast = toast;
+})
+
 
 const app = new Vue({
     el: '#app',

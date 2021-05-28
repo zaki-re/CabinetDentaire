@@ -23,6 +23,7 @@ class User extends Authenticatable
         'id_med_mal',
         'address',
         'mobile',
+        'age',
         'email',
         'password',
     ];

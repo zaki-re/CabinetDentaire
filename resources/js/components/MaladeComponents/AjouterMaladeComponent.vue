@@ -5,10 +5,17 @@
                 <div class="card-body">
                     <h2 class="title" >Ajout d'un malade</h2>
 
+                    <div
+                        v-if="errors !== ''"
+                    >
+                        <p class="text-danger">
+                            {{ errors }}
+                        </p>
+                    </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="inputEmail4">Nom</label>
-                                <input v-model="nom" type="text" class="form-control" id="inputEmail4" placeholder="Nom">
+                                <label >Nom</label>
+                                <input v-model="nom" type="text" class="form-control"  placeholder="Nom">
                                 <div
                                     v-if="nomErrors !== ''"
                                 >
@@ -18,8 +25,8 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="inputPassword4">Prenom</label>
-                                <input v-model="prenom"  type="text" class="form-control" id="inputPassword4" placeholder="Prenom">
+                                <label >Prenom</label>
+                                <input v-model="prenom"  type="text" class="form-control"  placeholder="Prenom">
                                 <div
                                     v-if="prenomErrors !== ''"
                                 >
@@ -30,8 +37,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputAddress">Mobile</label>
-                            <input v-model="mobile"  type="text" class="form-control" id="inputAddress" placeholder="05 42 48 76 63">
+                            <label >Mobile</label>
+                            <input v-model="mobile"  type="text" class="form-control"  placeholder="05 42 48 76 63">
                             <div
                                 v-if="mobileErrors !== ''"
                             >
@@ -41,9 +48,27 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputAddress2">Address </label>
-                            <input v-model="address"  type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                            <label >Address </label>
+                            <input v-model="address"  type="text" class="form-control" placeholder="Ville , willaya , pays ">
+                            <div
+                                v-if="addressErrors !== ''"
+                            >
+                                <p class="text-danger">
+                                    {{ addressErrors }}
+                                </p>
+                            </div>
                         </div>
+                    <div class="form-group">
+                        <label >Age </label>
+                        <input v-model="age"  type="text" class="form-control"  placeholder="Age du patient">
+                        <div
+                            v-if="ageErrors !== ''"
+                        >
+                            <p class="text-danger">
+                                {{ ageErrors }}
+                            </p>
+                        </div>
+                    </div>
 
 
                         <button @click="ajouterPersonne" class="btn btn-primary">Ajouter un Malade</button>
@@ -58,6 +83,7 @@
 export default {
     data() {
         return {
+            age:"",
             nom: "",
             prenom: "",
             address: "",
@@ -66,34 +92,57 @@ export default {
             prenomErrors: "",
             addressErrors: "",
             mobileErrors: "",
+            ageErrors:"",
+            errors:"",
 
         };
     },
     methods: {
         ajouterPersonne(){
             this.nomErrors= "";
-                this.prenomErrors= "";
+            this.ageErrors= "";
+            this.errors="",
+             this.prenomErrors= "";
                 this.addressErrors= "";
                 this.mobileErrors= "";
             var formData = new FormData();
             formData.append('nom',this.nom)
+            formData.append('age',this.age)
+
             formData.append('prenom',this.prenom)
             formData.append('address',this.address)
             formData.append('mobile',this.mobile)
 
             axios.post('/ajouter_malade',formData,{
                 headers: {"Content-Type": "multipart/form-data"}
-            }).then(()=>{
-                Swal.fire(
-                    'Malade ajouter!',
-                    'Le malade a ete ajouté !',
-                    'success'
-                )
-
-            }).catch(error => {
+            }).then((res)=>{
+                if(res.data.status == 0){
+                    this.errors= "Le malade exisite deja avec se numéro de telephone";
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Malade exisite deja vec se numéro de telephone'
+                    })
+                }
+                else{
+                    this.nomErrors= "";
+                    this.errors= "";
+                    this.ageErrors= "";
+                    this.prenomErrors= "";
+                    this.addressErrors= "";
+                    this.mobileErrors= "";
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Malade ajouter correctement'
+                    })
+            }
+            }).catch((error) => {
+                if (error.response.data.errors.age) {
+                    this.ageErrors = error.response.data.errors.age[0];
+                }
                 if (error.response.data.errors.nom) {
                     this.nomErrors = error.response.data.errors.nom[0];
                 }
+
                 if (error.response.data.errors.address) {
                     this.addressErrors = error.response.data.errors.address[0];
                 }
