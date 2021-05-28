@@ -32,11 +32,13 @@ class UserFactory extends Factory
             'nom' => $this->faker->name,
             'prenom' => $this->faker->firstName,
             'address' => $this->faker->address,
+            'age' => 22,
+
             'mobile' => $this->faker->phoneNumber,
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'type_user' => $type_user,
-            'id_med_mal' => $type_user=='Medecin' ? Medecin::factory() : Malade::factory() ,
+            'id_med_mal' => $type_user=='Medecin' ? null : Malade::factory() ,
             'password' => Hash::make('Password'), // password
             'remember_token' => Str::random(10),
         ];

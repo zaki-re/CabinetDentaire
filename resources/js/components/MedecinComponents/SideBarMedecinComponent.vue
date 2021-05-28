@@ -33,7 +33,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/dashboard"   class="nav-link">
+                        <a href="/historique_malade"   class="nav-link">
 
                             <i class=" nav-icon fas fa-book"></i>
                             <p>
