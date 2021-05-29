@@ -43,8 +43,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="/antecedants"   class="nav-link">
-
-                            <i class=" nav-icon fas fa-book"></i>
+                            <i class="nav-icon fas fa-hospital-symbol"></i>
                             <p>
                                 Les Antécédants
                             </p>
