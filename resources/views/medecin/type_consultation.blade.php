@@ -2,5 +2,5 @@
 @section('title','Cabinet Dentaire')
 @section('type','Médical')
 @section('content')
-    <consultation></consultation>
+    <type-consultation></type-consultation>
 @endsection

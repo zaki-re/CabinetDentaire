@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Medecin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AntecedantsRequest;
 use App\Models\Antecedants;
 use App\Models\MaladeAntecedants;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class AntecedantsController extends Controller
         return  Antecedants::where('id_medecin',Auth::user()->id)->get();
 
     }
-    public function createAntecedants(Request $request){
+    public function createAntecedants(AntecedantsRequest $request){
         return  Antecedants::create([
             'type'=>$request->type,
             'id_medecin'=>Auth::user()->id,

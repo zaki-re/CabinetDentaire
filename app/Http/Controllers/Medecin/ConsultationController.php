@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Medecin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Consultation;
-use App\Models\ConsultationMalade;
+use App\Http\Requests\TypeConsultationRequest;
+use App\Models\TypeConsultation;
+use App\Models\TypeConsultationMalade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,30 +37,33 @@ class ConsultationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TypeConsultationRequest $request)
     {
-        //
+        return TypeConsultation::create([
+            'type'=>$request->type,
+            'id_medecin'=>Auth::user()->id,
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Consultation  $consultation
+     * @param  \App\Models\TypeConsultation  $consultation
      * @return \Illuminate\Http\Response
      */
     public function show()
     {
-        return Consultation::where('id_medecin',Auth::user()->id)->get();
+        return TypeConsultation::where('id_medecin',Auth::user()->id)->get();
 
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Consultation  $consultation
+     * @param  \App\Models\TypeConsultation  $consultation
      * @return \Illuminate\Http\Response
      */
-    public function edit(Consultation $consultation)
+    public function edit(TypeConsultation $consultation)
     {
         //
     }
@@ -68,10 +72,10 @@ class ConsultationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Consultation  $consultation
+     * @param  \App\Models\TypeConsultation  $consultation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Consultation $consultation)
+    public function update(Request $request, TypeConsultation $consultation)
     {
         //
     }
@@ -79,18 +83,18 @@ class ConsultationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Consultation  $consultation
+     * @param  \App\Models\TypeConsultation  $consultation
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        if(Consultation::where('id',$id)->exists() && !ConsultationMalade::where('id_consultation',$id)->exists() ){
-            $antecedant = Consultation::findOrFail($id);
+        if(TypeConsultation::where('id',$id)->exists() && !TypeConsultationMalade::where('id_consultation',$id)->exists() ){
+            $antecedant = TypeConsultation::findOrFail($id);
             $antecedant->delete();
             return response()->json(['status' => 200, 'error' => 'Consultation Supprimer avec succés']);
 
         }
-        else if(ConsultationMalade::where('id_antecedant',$id)->exists()) {
+        else if(TypeConsultationMalade::where('id_antecedant',$id)->exists()) {
             return response()->json(['status' => 0, 'error' => "la Consultation ne peut pas etre supprimer car un Malade est affecter"]);
 
         }else{

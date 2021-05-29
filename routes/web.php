@@ -35,9 +35,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/delete_malade/{id_antecedants}', [App\Http\Controllers\Malade\MaladeController::class, 'destroy'])->name('delete.malade');
     Route::get('/nombre_de_malade', [App\Http\Controllers\Malade\MaladeController::class, 'nbrDeMalade'])->name('nombre.malade');
     Route::get('/malade_antecedants/{id_malade}', [App\Http\Controllers\Medecin\AntecedantsController::class, 'maladeAntecedants'])->name('malade.antecedants');
-    Route::get('/consultations', [App\Http\Controllers\Medecin\ConsultationController::class, 'index'])->name('show.consultation');
-    Route::get('/get_consultations', [App\Http\Controllers\Medecin\ConsultationController::class, 'show'])->name('display.consulation');
-    Route::get('/delete_consultation/{id_consultation}', [App\Http\Controllers\Medecin\ConsultationController::class, 'destroy'])->name('delete.consulation');
+    Route::get('/type_consultations', [App\Http\Controllers\Medecin\ConsultationController::class, 'index'])->name('show.consultation');
+    Route::get('/get_consultations', [App\Http\Controllers\Medecin\ConsultationController::class, 'show'])->name('display.consultation');
+    Route::get('/delete_consultation/{id_consultation}', [App\Http\Controllers\Medecin\ConsultationController::class, 'destroy'])->name('delete.consultation');
+    Route::post('/ajouter_consultation', [App\Http\Controllers\Medecin\ConsultationController::class, 'store'])->name('ajotuer.consultation');
 
 
 

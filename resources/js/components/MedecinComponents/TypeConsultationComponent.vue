@@ -5,19 +5,19 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Les Consultations</h3>
-                            <div class="text-right"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterAntecedants">
+                            <h3 class="card-title">Les type de consultations</h3>
+                            <div class="text-right"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterTypeConsultation">
                                 Ajouter un type de consultation
                             </button></div>
 
 
 
                             <!-- Modal -->
-                            <div class="modal fade" id="ajouterAntecedants" tabindex="-1" role="dialog" aria-labelledby="ajouterAntecedantsTitle" aria-hidden="true">
+                            <div class="modal fade" id="ajouterTypeConsultation" tabindex="-1" role="dialog" aria-labelledby="ajouterTypeConsultationTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                            <h5 class="modal-title" id="ajouterTypeConsultationTitle">Ajouter un type de consultation</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -29,7 +29,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" @click="ajouterAntecedants" class="btn btn-primary">Save changes</button>
+                                            <button type="button" @click="ajouterTypeConsultation" class="btn btn-primary">Save changes</button>
                                         </div>
                                     </div>
                                 </div>
@@ -79,6 +79,7 @@ export default {
         return {
             consultations: {},
             type:"",
+            typeError:"",
 
         }
     },
@@ -102,7 +103,7 @@ export default {
                                 "La consultation a été supprimer avec succés",
                                 'success'
                             )
-                            this.loadConsultations();
+                            this.loadTypeConsultations();
                         }
                         else{
                             Swal.fire({
@@ -117,29 +118,35 @@ export default {
             })
 
         },
-        loadConsultations() {
+        loadTypeConsultations() {
             axios.get("/get_consultations").then((data) => {
                 this.consultations =data.data
             })
         },
-        ajouterAntecedants(){
-
+        ajouterTypeConsultation(){
+            this.typeError=""
             var formData = new FormData();
             formData.append('type',this.type)
-            axios.post("/ajouter_antecedant",formData,{
+            axios.post("/ajouter_consultation",formData,{
                 headers: {"Content-Type": "multipart/form-data"}
             }).then(() => {
-                $('#ajouterAntecedants').modal('hide')
+                this.type=""
+                $('#ajouterTypeConsultation').modal('hide')
                 Swal.fire({
                     icon: 'success',
-                    title: 'Antecedants ajouter correctement'
+                    title: 'Consultation ajouter correctement'
                 })
-                this.loadConsultations();
+                this.loadTypeConsultations();
+
+            }).catch((error)=>{
+                if (error.response.data.errors.type) {
+                    this.typeErrors = error.response.data.errors.type[0];
+                }
             })
         }
     },
     created() {
-        this.loadConsultations();
+        this.loadTypeConsultations();
 
     },
 }
