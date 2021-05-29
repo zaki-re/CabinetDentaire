@@ -27,6 +27,7 @@ Vue.component('side-nav-medecin', require('./components/MedecinComponents/SideBa
 Vue.component('ajouter-medecin', require('./components/MaladeComponents/AjouterMaladeComponent.vue').default);
 Vue.component('historique-malade', require('./components/MedecinComponents/HisotriqueMaladesComponent.vue').default);
 Vue.component('malade-profile', require('./components/MaladeComponents/MaladeProfileComponent.vue').default);
+Vue.component('antecedants', require('./components/MedecinComponents/AntecedantsDentisteComponent.vue').default);
 
 
 

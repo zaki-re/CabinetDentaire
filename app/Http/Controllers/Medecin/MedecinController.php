@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Medecin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Antecedants;
 use Illuminate\Http\Request;
 
 class MedecinController extends Controller
@@ -16,6 +17,7 @@ class MedecinController extends Controller
     {
         return view('medecin.dashboard');
     }
+
 
     /**
      * Show the form for creating a new resource.

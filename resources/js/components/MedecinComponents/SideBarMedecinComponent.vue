@@ -41,6 +41,15 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="/antecedants"   class="nav-link">
+
+                            <i class=" nav-icon fas fa-book"></i>
+                            <p>
+                                Les Antécédants
+                            </p>
+                        </a>
+                    </li>
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
 

@@ -10,9 +10,7 @@ class Antecedants extends Model
     use HasFactory;
     public $timestamps = false;
     protected $fillable = [
+        'type',
         'id_medecin',
-        'id_malade',
-        'id_antecedant',
-
     ];
 }

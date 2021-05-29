@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Malade;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MaladeCreateRequset;
 use App\Models\Malade;
+use App\Models\MaladeAntecedants;
 use App\Models\MaladeMedecin;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -46,10 +47,12 @@ class MaladeController extends Controller
      */
     public function store(MaladeCreateRequset $request)
     {
+
         if (User::where('mobile',$request->mobile)->exists()){
             return response()->json(['status' => 0, 'error' => 'le numéro de telephone existe deja ']);
 
         }
+
        $malade= User::create([
            'nom'=>$request->nom,
            'prenom'=>$request->prenom,
@@ -59,11 +62,27 @@ class MaladeController extends Controller
             'type_user'=>'Malade',
             'id_med_mal'=>Auth::user()->id,
         ]);
-        return MaladeMedecin::create([
+         MaladeMedecin::create([
             'id_malade'=> $malade->id,
             'id_medecin'=>Auth::user()->id,
         ]);
+         if($request->antecedants !== []){
+             foreach ($request->antecedants as $antecedant ){
+                 MaladeAntecedants::create([
+                     'id_medecin'=>Auth::user()->id,
+                     'id_malade'=>$malade->id,
+                     'id_antecedant' =>$antecedant,
+                 ]);
+             }
+         }
 
+        return response()->json(['status' => 200, 'message' => 'Malade Ajouter avec succès']);
+
+
+
+    }
+    public function nbrDeMalade(){
+        return User::where('id_med_mal',Auth::user()->id)->count();
     }
 
     /**
@@ -120,6 +139,15 @@ class MaladeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(User::where('id',$id)->where('id_med_mal',Auth::user()->id)->exists()){
+            $malade = User::findOrFail($id);
+            $malade->delete();
+            return response()->json(['status' => 200, 'error' => 'Malade Supprimer avec succés']);
+
+        }
+        else {
+            return response()->json(['status' => 404, 'error' => "Error Malade n'existes pas"]);
+
+        }
     }
 }

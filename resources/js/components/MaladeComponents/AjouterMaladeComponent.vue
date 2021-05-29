@@ -1,6 +1,7 @@
 <template>
-    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
-        <div class="wrapper wrapper--w680">
+    <div class="content-wrapper">
+
+        <div class="container">
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="title" >Ajout d'un malade</h2>
@@ -69,6 +70,10 @@
                             </p>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="typo__label">Antecedants</label>
+                        <multiselect v-model="value" tag-placeholder="Add this as new tag" placeholder="Ajouter les antécédants" label="type" track-by="id" :options="options" :multiple="true" :taggable="true" @tag="addTag"></multiselect>
+                    </div>
 
 
                         <button @click="ajouterPersonne" class="btn btn-primary">Ajouter un Malade</button>
@@ -79,10 +84,15 @@
     </div>
 </template>
 <script>
-
+import Multiselect from 'vue-multiselect'
 export default {
+    components: {
+        Multiselect
+    },
     data() {
         return {
+            value: [],
+            options: [],
             age:"",
             nom: "",
             prenom: "",
@@ -98,6 +108,19 @@ export default {
         };
     },
     methods: {
+        addTag (newTag) {
+            const tag = {
+                name: newTag,
+                code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
+            }
+            this.options.push(tag)
+            this.value.push(tag)
+        },
+        loadAntecedants() {
+            axios.get("/get_antecedants").then((data) => {
+                this.options =data.data
+            })
+        },
         ajouterPersonne(){
             this.nomErrors= "";
             this.ageErrors= "";
@@ -106,8 +129,13 @@ export default {
                 this.addressErrors= "";
                 this.mobileErrors= "";
             var formData = new FormData();
+            for (var i = 0; i < this.value.length; i++) {
+                formData.append('antecedants[]', this.value[i].id);
+            }
             formData.append('nom',this.nom)
             formData.append('age',this.age)
+
+
 
             formData.append('prenom',this.prenom)
             formData.append('address',this.address)
@@ -154,6 +182,11 @@ export default {
                 }
             })
         }
+    },
+    created(){
+       this.loadAntecedants();
     }
 }
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
