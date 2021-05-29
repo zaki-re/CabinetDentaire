@@ -142,6 +142,12 @@ class MaladeController extends Controller
         if(User::where('id',$id)->where('id_med_mal',Auth::user()->id)->exists()){
             $malade = User::findOrFail($id);
             $malade->delete();
+            if(MaladeAntecedants::where('id_malade',$id)->exists()){
+                $maladeAntecedants = MaladeAntecedants::where('id_malade',$id)->get();
+                foreach ($maladeAntecedants as $maladeAntecedant){
+                    $maladeAntecedant->delete();
+                }
+            }
             return response()->json(['status' => 200, 'error' => 'Malade Supprimer avec succés']);
 
         }
