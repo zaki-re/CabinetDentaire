@@ -15,6 +15,7 @@ class CreateAntecedantsTable extends Migration
     {
         Schema::create('antecedants', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('id_medecin')->unsigned();
             $table->string('type');
         });
     }

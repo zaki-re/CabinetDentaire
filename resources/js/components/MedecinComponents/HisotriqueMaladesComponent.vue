@@ -44,6 +44,7 @@
                                        <!-- <a href="#" class="btn btn-primary" @click="updatemodelfaq(faq)"> edit </a> -->
                                         <a href="/consulter_profile/" :href="'consulter_profile/'+malade.id" class="btn btn-primary" >
                                             Consulter le profile </a>
+                                        <button @click="remove(malade.id)" class="btn btn-danger"> Supprimer</button>
                                     </td>
 
                                 </tr>
@@ -70,6 +71,30 @@ export default {
         }
     },
     methods: {
+        remove(id){
+            Swal.fire({
+                title: 'Vous etes sur?',
+                text: "Ce malade sera supprimer de façon définitive !",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Oui, Supprimez le !'
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                    axios.get("/delete_malade/"+id).then(()=>{
+                        Swal.fire(
+                            'Supprimer !',
+                            "Le malade a été supprimer avec succés",
+                            'success'
+                        )
+                        this.loadMalades();
+                    })
+
+                }
+            })
+        },
          loadMalades() {
              axios.get("/getMalade").then((data) => {
                  this.malades =data.data
