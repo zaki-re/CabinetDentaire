@@ -77,7 +77,7 @@ class ConsultationController extends Controller
      */
     public function update(Request $request, TypeConsultation $consultation)
     {
-        //
+
     }
 
     /**

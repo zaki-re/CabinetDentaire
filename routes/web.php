@@ -39,6 +39,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/get_consultations', [App\Http\Controllers\Medecin\ConsultationController::class, 'show'])->name('display.consultation');
     Route::get('/delete_consultation/{id_consultation}', [App\Http\Controllers\Medecin\ConsultationController::class, 'destroy'])->name('delete.consultation');
     Route::post('/ajouter_consultation', [App\Http\Controllers\Medecin\ConsultationController::class, 'store'])->name('ajotuer.consultation');
+    Route::post('/update_patient/{id}', [App\Http\Controllers\Malade\MaladeController::class, 'update'])->name('ajotuer.consultation');
 
 
 

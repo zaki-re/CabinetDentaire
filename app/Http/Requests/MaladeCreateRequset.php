@@ -28,8 +28,9 @@ class MaladeCreateRequset extends FormRequest
             'nom' => '|string|max:50',
             'prenom' => '|string|max:50',
             'address' => 'nullable|string|max:50',
-            'phone' => 'nullable|digits:10',
+            'mobile' => 'nullable|digits:10',
             'age' => 'required|integer|between:1,100',
+
 
         ];
     }
