@@ -5,19 +5,19 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Les Antécédants</h3>
-                            <div class="text-right"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterAntecedants">
-                                Ajouter un antécédants
+                            <h3 class="card-title">Les type de consultations</h3>
+                            <div class="text-right"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterTypeConsultation">
+                                Ajouter un type de consultation
                             </button></div>
 
 
 
                             <!-- Modal -->
-                            <div class="modal fade" id="ajouterAntecedants" tabindex="-1" role="dialog" aria-labelledby="ajouterAntecedantsTitle" aria-hidden="true">
+                            <div class="modal fade" id="ajouterTypeConsultation" tabindex="-1" role="dialog" aria-labelledby="ajouterTypeConsultationTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Ajouter antecedent</h5>
+                                            <h5 class="modal-title" id="ajouterTypeConsultationTitle">Ajouter un type de consultation</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -28,8 +28,8 @@
 
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                            <button type="button" @click="ajouterAntecedants" class="btn btn-primary">Ajouter Antecedents</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" @click="ajouterTypeConsultation" class="btn btn-primary">Save changes</button>
                                         </div>
                                     </div>
                                 </div>
@@ -50,11 +50,11 @@
                                 <tbody>
 
 
-                                <tr v-for="antecedant in antecedants" :key="antecedant.id">
-                                    <td>{{ antecedant.id}}</td>
+                                <tr v-for="consultation in consultations" :key="consultation.id">
+                                    <td>{{ consultation.id}}</td>
 
-                                    <td>{{ antecedant.type}}</td>
-                                    <td><button @click="remove(antecedant.id)" class="btn btn-danger"> Supprimer</button></td>
+                                    <td>{{ consultation.type}}</td>
+                                    <td><button @click="remove(consultation.id)" class="btn btn-danger"> Supprimer</button></td>
 
 
 
@@ -74,11 +74,12 @@
 </template>
 <script >
 export default {
-    name: "AntecedantsDentisteComponent",
+    name: "ConsultationComponent",
     data() {
         return {
-            antecedants: {},
+            consultations: {},
             type:"",
+            typeError:"",
 
         }
     },
@@ -86,23 +87,23 @@ export default {
         remove(id){
             Swal.fire({
                 title: 'Vous etes sur?',
-                text: "Cette antécédant sera supprimer de façon définitive !",
+                text: "Cette Consultation sera supprimer de façon définitive !",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Oui, Supprimez le !'
+                confirmButtonText: 'Oui, Supprimez la !'
             }).then((result) => {
 
                 if (result.isConfirmed) {
-                    axios.get("/delete_antecedants/"+id).then((data)=>{
+                    axios.get("/delete_consultation/"+id).then((data)=>{
                         if(data.data.status !== 0 ){
-                        Swal.fire(
-                            'Supprimer !',
-                            "L'antécédant a été supprimer avec succés",
-                            'success'
-                        )
-                        this.loadAntecedants();
+                            Swal.fire(
+                                'Supprimer !',
+                                "La consultation a été supprimer avec succés",
+                                'success'
+                            )
+                            this.loadTypeConsultations();
                         }
                         else{
                             Swal.fire({
@@ -117,29 +118,35 @@ export default {
             })
 
         },
-        loadAntecedants() {
-            axios.get("/get_antecedants").then((data) => {
-                this.antecedants =data.data
+        loadTypeConsultations() {
+            axios.get("/get_consultations").then((data) => {
+                this.consultations =data.data
             })
         },
-        ajouterAntecedants(){
-
+        ajouterTypeConsultation(){
+            this.typeError=""
             var formData = new FormData();
             formData.append('type',this.type)
-            axios.post("/ajouter_antecedant",formData,{
+            axios.post("/ajouter_consultation",formData,{
                 headers: {"Content-Type": "multipart/form-data"}
             }).then(() => {
-                $('#ajouterAntecedants').modal('hide')
+                this.type=""
+                $('#ajouterTypeConsultation').modal('hide')
                 Swal.fire({
                     icon: 'success',
-                    title: 'Antecedants ajouter correctement'
+                    title: 'Consultation ajouter correctement'
                 })
-                this.loadAntecedants();
+                this.loadTypeConsultations();
+
+            }).catch((error)=>{
+                if (error.response.data.errors.type) {
+                    this.typeErrors = error.response.data.errors.type[0];
+                }
             })
         }
     },
     created() {
-        this.loadAntecedants();
+        this.loadTypeConsultations();
 
     },
 }

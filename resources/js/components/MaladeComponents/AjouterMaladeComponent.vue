@@ -71,8 +71,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="typo__label">Antecedants</label>
-                        <multiselect v-model="value" tag-placeholder="Add this as new tag" placeholder="Ajouter les antécédants" label="type" track-by="id" :options="options" :multiple="true" :taggable="true" @tag="addTag"></multiselect>
+                        <label class="typo__label">Antecedents</label>
+                        <multiselect v-model="value" tag-placeholder="Add this as new tag" placeholder="Ajouter les antécédents" label="type" track-by="id" :options="options" :multiple="true" :taggable="true" @tag="addTag"></multiselect>
                     </div>
 
 

@@ -43,9 +43,17 @@
                     </li>
                     <li class="nav-item">
                         <a href="/antecedants"   class="nav-link">
+                            <i class="nav-icon fas fa-notes-medical"></i>
+                            <p>
+                                Les Antécédents
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/type_consultations"   class="nav-link">
                             <i class="nav-icon fas fa-hospital-symbol"></i>
                             <p>
-                                Les Antécédants
+                                Les consultations
                             </p>
                         </a>
                     </li>

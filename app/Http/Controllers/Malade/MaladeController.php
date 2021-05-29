@@ -66,7 +66,7 @@ class MaladeController extends Controller
             'id_malade'=> $malade->id,
             'id_medecin'=>Auth::user()->id,
         ]);
-         if($request->antecedants !== []){
+         if($request->antecedants){
              foreach ($request->antecedants as $antecedant ){
                  MaladeAntecedants::create([
                      'id_medecin'=>Auth::user()->id,
@@ -126,9 +126,35 @@ class MaladeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MaladeCreateRequset $request, $id)
     {
-        //
+
+        if(User::where('id',$id)->where('id_med_mal',Auth::user()->id)->exists()){
+            $patient=User::findOrFail($id);
+            $patient->nom= $request->nom;
+            $patient->prenom = $request->prenom;
+            $patient->age = $request->age;
+            $patient->mobile = $request->mobile;
+            $patient->address = $request->address;
+            $patient->save();
+            if(MaladeAntecedants::where('id_malade',$id)->where('id_medecin',Auth::user()->id)->exists()){
+                MaladeAntecedants::where('id_malade',$id)->where('id_medecin',Auth::user()->id)->delete();
+            }
+            if($request->antecedants){
+                foreach ($request->antecedants as $antecedant ){
+                    MaladeAntecedants::create([
+                        'id_medecin'=>Auth::user()->id,
+                        'id_malade'=>$id,
+                        'id_antecedant' =>$antecedant,
+                    ]);
+                }
+            }
+            return response()->json(['status' => 200, 'malade' => $patient]);
+
+        }else {
+            return response()->json(['status' => 0, 'errors' =>"on a pas pu trouver l'utilisateur "]);
+        }
+
     }
 
     /**
@@ -142,6 +168,12 @@ class MaladeController extends Controller
         if(User::where('id',$id)->where('id_med_mal',Auth::user()->id)->exists()){
             $malade = User::findOrFail($id);
             $malade->delete();
+            if(MaladeAntecedants::where('id_malade',$id)->exists()){
+                $maladeAntecedants = MaladeAntecedants::where('id_malade',$id)->get();
+                foreach ($maladeAntecedants as $maladeAntecedant){
+                    $maladeAntecedant->delete();
+                }
+            }
             return response()->json(['status' => 200, 'error' => 'Malade Supprimer avec succés']);
 
         }
