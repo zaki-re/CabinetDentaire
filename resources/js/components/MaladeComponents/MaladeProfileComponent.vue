@@ -66,10 +66,9 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Malades</h3>
+                                <h3 class="card-title">Malade : {{ malade.nom }} , {{ malade.prenom}}</h3>
 
                                 <div class="card-tools">
-
 
                                 </div>
 
@@ -79,12 +78,13 @@
                                 <table class="table table-hover" id="datatable">
                                     <thead>
                                     <tr>
-                                        <th>Nom</th>
-                                        <th>Prenom</th>
-                                        <th>Age</th>
-                                        <th>Address</th>
-                                        <th>Mobile</th>
-                                        <th>Email</th>
+                                        <th>Nom , Prenom</th>
+                                        <th>Dents</th>
+                                        <th>Soins</th>
+                                        <th>Radio</th>
+                                        <th>Rendez vous</th>
+                                        <th>Versement</th>
+                                        <th>Reste</th>
 
                                         <th></th>
 
@@ -118,9 +118,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-
 </template>
 <script>
 props: ['malade'];
@@ -129,11 +126,11 @@ export default {
     data() {
         return {
             malade:{},
-            user:this.malade,
 
         };
     },
     methode:{
+
     },
     created() {
     this.malade=this.$attrs.malade
