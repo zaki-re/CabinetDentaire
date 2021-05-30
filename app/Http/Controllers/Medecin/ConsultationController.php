@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Medecin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TypeConsultationRequest;
-use App\Models\TypeConsultation;
-use App\Models\TypeConsultationMalade;
+use App\Models\Consultation;
+use App\Models\DentConsultation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +18,7 @@ class ConsultationController extends Controller
      */
     public function index()
     {
-        return view('medecin.type_consultation');
+        //
     }
 
     /**
@@ -37,33 +37,50 @@ class ConsultationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TypeConsultationRequest $request)
+    public function store(Request $request)
     {
-        return TypeConsultation::create([
-            'type'=>$request->type,
-            'id_medecin'=>Auth::user()->id,
+       $consultation =  Consultation::create([
+           'id_medecin'=>Auth::user()->id,
+           'id_malade'=>$request->id_malade,
+           'date_consultation'=>Carbon::now(),
+            'date_prochaine_rdv'=>$request->date_prochaine_rdv,
+            'type_consultation'=>$request->type_consultation,
+            'soins'=>$request->soins,
+            'versement'=>$request->versement,
+            'rest'=>$request->rest,
         ]);
+
+        if($request->dents){
+            foreach ($request->dents as $dent ){
+                DentConsultation::create([
+                    'id_medecin'=> Auth::user()->id,
+                    'id_malade'=>$request->id_malade,
+                    'id_consultation'=>$consultation->id,
+                    'numero_dents'=>$dent,
+                ]);
+            }
+        }
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TypeConsultation  $consultation
+     * @param  \App\Models\Consultation  $consultation
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Consultation $consultation)
     {
-        return TypeConsultation::where('id_medecin',Auth::user()->id)->get();
-
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TypeConsultation  $consultation
+     * @param  \App\Models\Consultation  $consultation
      * @return \Illuminate\Http\Response
      */
-    public function edit(TypeConsultation $consultation)
+    public function edit(Consultation $consultation)
     {
         //
     }
@@ -72,35 +89,22 @@ class ConsultationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TypeConsultation  $consultation
+     * @param  \App\Models\Consultation  $consultation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TypeConsultation $consultation)
+    public function update(Request $request, Consultation $consultation)
     {
-
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TypeConsultation  $consultation
+     * @param  \App\Models\Consultation  $consultation
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Consultation $consultation)
     {
-        if(TypeConsultation::where('id',$id)->exists() && !TypeConsultationMalade::where('id_consultation',$id)->exists() ){
-            $antecedant = TypeConsultation::findOrFail($id);
-            $antecedant->delete();
-            return response()->json(['status' => 200, 'error' => 'Consultation Supprimer avec succés']);
-
-        }
-        else if(TypeConsultationMalade::where('id_antecedant',$id)->exists()) {
-            return response()->json(['status' => 0, 'error' => "la Consultation ne peut pas etre supprimer car un Malade est affecter"]);
-
-        }else{
-
-            return response()->json(['status' => 404, 'error' => 'Error Consultation n existes pas  ']);
-
-        }
+        //
     }
 }
