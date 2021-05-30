@@ -127,7 +127,7 @@ export default {
             this.typeError=""
             var formData = new FormData();
             formData.append('type',this.type)
-            axios.post("/ajouter_consultation",formData,{
+            axios.post("/ajouter_type_consultation",formData,{
                 headers: {"Content-Type": "multipart/form-data"}
             }).then(() => {
                 this.type=""
