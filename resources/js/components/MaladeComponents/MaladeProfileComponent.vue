@@ -230,6 +230,7 @@ export default {
             dentsChoisi:[],
             typeConsultation:[],
             typeConsultationChoisi:"",
+            typeConsultationChoisiErrors:"",
             dentsChoisiErrors:'',
             nomErrors:'',
             soins:'',
@@ -247,17 +248,20 @@ export default {
     },
     methods: {
         ajouterConsultation(){
-
+            this.soinsErrors="";
+            this.dentsChoisiErrors="";
+            this.typeConsultationChoisiErrors="";
+            this.errors="";
+            this.versementErrors="";
+            this.restErrors="";
+            this.prochaineRdvErrors="";
 
             var formData = new FormData();
             for (var i = 0; i < this.dentsChoisi.length; i++) {
                 formData.append('dents[]', this.dentsChoisi[i].numero);
             }
-
             formData.append('soins',this.soins)
             formData.append('type_consultation',this.typeConsultationChoisi)
-
-
             formData.append('id_malade',this.malade.id)
             formData.append('versement',this.versement)
             formData.append('rest',this.rest)
@@ -266,7 +270,42 @@ export default {
           axios.post('/ajotuer_consultation',formData,{
               headers: {"Content-Type": "multipart/form-data"}
           }).then(()=>{
-                console.log('working')
+              this.dentsChoisiErrors="";
+              this.soinsErrors="";
+              this.typeConsultationChoisiErrors="";
+              this.versementErrors="";
+                  this.errors="";
+              this.restErrors="";
+              this.prochaineRdvErrors="";
+              $('#ajouterConsultation').modal('hide')
+
+              Swal.fire(
+                  'Modifer !',
+                  "Le patient a été modifier avec succés",
+                  'success'
+              )
+          }).catch((error)=>{
+              if (error.response.data.errors.soins) {
+                  this.soinsErrors = error.response.data.errors.soins[0];
+              }
+              if (error.response.data.errors.dents) {
+                  this.dentsChoisiErrors = error.response.data.errors.dents[0];
+              }
+              if (error.response.data.errors.date_prochaine_rdv) {
+                  this.prochaineRdvErrors = error.response.data.errors.date_prochaine_rdv[0];
+              }
+              if (error.response.data.errors.type_consultation) {
+                  this.typeConsultationChoisiErrors = error.response.data.errors.type_consultation[0];
+              }
+              if (error.response.data.errors.id_malade) {
+                  this.errors = error.response.data.errors.id_malade[0];
+              }
+              if (error.response.data.errors.versement) {
+                  this.versementErrors = error.response.data.errors.versement[0];
+              }
+              if (error.response.data.errors.rest) {
+                  this.restErrors = error.response.data.errors.rest[0];
+              }
           })
         },
         updatePatient(){
