@@ -75,10 +75,8 @@ class ConsultationController extends Controller
      */
     public function show($id)
     {
-        return DB::table('consultations as c')
-            ->where('c.id_medecin',Auth::user()->id)
-            ->where('c.id_malade',$id)
-
+        return Consultation::where('id_medecin',Auth::user()->id)
+            ->where('id_malade',$id)
             ->get();
 
     }
