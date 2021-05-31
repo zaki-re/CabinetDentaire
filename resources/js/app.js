@@ -29,6 +29,7 @@ Vue.component('historique-malade', require('./components/MedecinComponents/Hisot
 Vue.component('malade-profile', require('./components/MaladeComponents/MaladeProfileComponent.vue').default);
 Vue.component('antecedants', require('./components/MedecinComponents/AntecedantsDentisteComponent.vue').default);
 Vue.component('type-consultation', require('./components/MedecinComponents/TypeConsultationComponent.vue').default);
+Vue.component('add-dent', require('./components/MedecinComponents/AjouterDentComponent.vue').default);
 
 
 
