@@ -49,7 +49,12 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::post('/update_patient/{id}', [App\Http\Controllers\Malade\MaladeController::class, 'update'])->name('update.patient');
-    Route::get('/getDents', [App\Http\Controllers\Medecin\DentController::class, 'show'])->name('get.dents');
+    Route::get('/get_dents', [App\Http\Controllers\Medecin\DentController::class, 'show'])->name('get.dents');
+    Route::get('/ajouter_dent', [App\Http\Controllers\Medecin\DentController::class, 'index'])->name('display.dents');
+    Route::post('/ajouter_dent', [App\Http\Controllers\Medecin\DentController::class, 'store'])->name('ajouter.dents');
+    Route::get('/delete_dent/{id_dent}', [App\Http\Controllers\Medecin\DentController::class, 'destroy'])->name('display.dents');
+
+
     Route::post('/ajotuer_consultation', [App\Http\Controllers\Medecin\ConsultationController::class, 'store'])->name('ajotuer.consultation');
     Route::get('/get_consultation/{id_malade}', [App\Http\Controllers\Medecin\ConsultationController::class, 'show'])->name('get.malade.consultation');
     Route::get('/get_dents_consultation/{id_malade}', [App\Http\Controllers\Medecin\ConsultationController::class, 'getDentsConsultation'])->name('get.dents.consultation');

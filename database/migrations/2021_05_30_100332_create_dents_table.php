@@ -16,6 +16,7 @@ class CreateDentsTable extends Migration
         Schema::create('dents', function (Blueprint $table) {
             $table->id();
             $table->string('dent');
+            $table->bigInteger('id_medecin');
             $table->string('numero')->unique();
             $table->string('emplacement');
         });

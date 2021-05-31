@@ -50,6 +50,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="/ajouter_dent"   class="nav-link">
+                            <i class="nav-icon fas fa-tooth"></i>
+                            <p>
+                                Les Dents
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="/type_consultations"   class="nav-link">
                             <i class="nav-icon fas fa-hospital-symbol"></i>
                             <p>

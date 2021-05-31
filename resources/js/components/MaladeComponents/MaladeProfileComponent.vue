@@ -300,7 +300,8 @@ export default {
               this.restErrors="";
               this.prochaineRdvErrors="";
               $('#ajouterConsultation').modal('hide')
-
+              this.getConsultation();
+              this.getDentsConsultation();
               Swal.fire(
                   'Ajouter !',
                   "La consutation a été ajouter avec succés",
@@ -422,7 +423,7 @@ export default {
             })
         },
         loadAdents() {
-            axios.get("/getDents").then((data) => {
+            axios.get("/get_dents").then((data) => {
                 this.dents =data.data
             })
         },
