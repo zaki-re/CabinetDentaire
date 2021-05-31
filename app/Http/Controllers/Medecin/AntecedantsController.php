@@ -43,7 +43,7 @@ class AntecedantsController extends Controller
         if(Antecedants::where('id',$id)->exists() && !MaladeAntecedants::where('id_antecedant',$id)->exists() ){
             $antecedant = Antecedants::findOrFail($id);
             $antecedant->delete();
-            return response()->json(['status' => 200, 'error' => 'antecedants Supprimer avec succés']);
+            return response()->json(['status' => 200, 'message' => 'antecedants Supprimer avec succés']);
 
         }
         else if(MaladeAntecedants::where('id_antecedant',$id)->exists()) {

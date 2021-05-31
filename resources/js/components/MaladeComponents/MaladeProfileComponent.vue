@@ -188,16 +188,30 @@
                                             <th scope="col">Prochain RDV</th>
                                             <th scope="col">Versement</th>
                                             <th scope="col">Rest</th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr class="font-weight-normal h6">
-                                            <th>1234001</th>
-                                            <td>test</td>
-                                            <td>500.00</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>500</td>
+                                        <tr v-for="consultation in consultations" class="font-weight-normal h6">
+                                            <th>{{ malade.nom }} {{ malade.prenom}} </th>
+
+                                            <td>
+                                                <div v-for="dentTraiter in dentTraiters"  >
+                                                    <div class="right badge badge-danger" v-if="dentTraiter.id_consultation == consultation.id">
+                                                        {{dentTraiter.numero_dents}}
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td>{{ consultation.soins }}</td>
+                                            <td>{{consultation.date_prochaine_rdv}}</td>
+                                            <td>{{consultation.versement}}</td>
+                                            <td>{{consultation.rest}}</td>
+                                            <td>
+                                                <button class="btn btn-primary"> modifier</button>
+                                                <button class="btn btn-danger"> supprimer</button>
+                                            </td>
+
                                         </tr>
                                         </tbody>
                                     </table>
@@ -233,6 +247,8 @@ export default {
             typeConsultationChoisi:"",
             typeConsultationChoisiErrors:"",
             dentsChoisiErrors:'',
+            consultations:[],
+            dentTraiters:[],
             nomErrors:'',
             soins:'',
             soinsErrors:'',
@@ -248,6 +264,11 @@ export default {
         };
     },
     methods: {
+        getConsultation(){
+        axios.get('/get_consultation/'+this.malade.id).then((data)=>{
+            this.consultations=data.data
+        })
+        },
         ajouterConsultation(){
             this.soinsErrors="";
             this.dentsChoisiErrors="";
@@ -406,10 +427,15 @@ export default {
             })
         },
         loadTypeConsultations() {
-            axios.get("/get_consultations").then((data) => {
+            axios.get("/get_type_consultations").then((data) => {
                 this.typeConsultation =data.data
             })
         },
+        getDentsConsultation(){
+            axios.get('/get_dents_consultation/'+this.malade.id).then((data)=>{
+                this.dentTraiters = data.data
+            })
+        }
     },
 
     created() {
@@ -418,7 +444,10 @@ export default {
            this.getAntecedants();
            this.loadAdents();
            this.loadTypeConsultations();
-    },
+           this.getConsultation();
+        this.getDentsConsultation();
+
+        },
 }
 
 </script>

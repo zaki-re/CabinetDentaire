@@ -96,7 +96,7 @@ export default {
             }).then((result) => {
 
                 if (result.isConfirmed) {
-                    axios.get("/delete_consultation/"+id).then((data)=>{
+                    axios.get("/delete_type_consultation/"+id).then((data)=>{
                         if(data.data.status !== 0 ){
                             Swal.fire(
                                 'Supprimer !',
@@ -119,7 +119,7 @@ export default {
 
         },
         loadTypeConsultations() {
-            axios.get("/get_consultations").then((data) => {
+            axios.get("/get_type_consultations").then((data) => {
                 this.consultations =data.data
             })
         },
