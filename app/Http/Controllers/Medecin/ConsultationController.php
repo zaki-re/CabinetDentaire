@@ -9,6 +9,7 @@ use App\Models\DentConsultation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ConsultationController extends Controller
 {
@@ -61,6 +62,8 @@ class ConsultationController extends Controller
                 ]);
             }
         }
+        return response()->json(['status' => 200, 'message' => 'consultation ajotuer avec succés']);
+
 
     }
 
@@ -70,9 +73,17 @@ class ConsultationController extends Controller
      * @param  \App\Models\Consultation  $consultation
      * @return \Illuminate\Http\Response
      */
-    public function show(Consultation $consultation)
+    public function show($id)
     {
-        //
+        return DB::table('consultations as c')
+            ->where('c.id_medecin',Auth::user()->id)
+            ->where('c.id_malade',$id)
+
+            ->get();
+
+    }
+    public function getDentsConsultation($id){
+        return DentConsultation::where('id_malade',$id)->where('id_medecin',Auth::user()->id)->get();
     }
 
     /**

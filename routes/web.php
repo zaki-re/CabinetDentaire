@@ -36,13 +36,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/nombre_de_malade', [App\Http\Controllers\Malade\MaladeController::class, 'nbrDeMalade'])->name('nombre.malade');
     Route::get('/malade_antecedants/{id_malade}', [App\Http\Controllers\Medecin\AntecedantsController::class, 'maladeAntecedants'])->name('malade.antecedants');
     Route::get('/type_consultations', [App\Http\Controllers\Medecin\TypeConsultationController::class, 'index'])->name('show.consultation');
-    Route::get('/get_consultations', [App\Http\Controllers\Medecin\TypeConsultationController::class, 'show'])->name('display.consultation');
-    Route::get('/delete_consultation/{id_consultation}', [App\Http\Controllers\Medecin\TypeConsultationController::class, 'destroy'])->name('delete.consultation');
+    Route::get('/get_type_consultations', [App\Http\Controllers\Medecin\TypeConsultationController::class, 'show'])->name('display.type.consultation');
+    Route::get('/delete_type_consultation/{id_consultation}', [App\Http\Controllers\Medecin\TypeConsultationController::class, 'destroy'])->name('delete.type.consultation');
     Route::post('/ajouter_type_consultation', [App\Http\Controllers\Medecin\TypeConsultationController::class, 'store'])->name('ajotuer.type.consultation');
     Route::post('/update_patient/{id}', [App\Http\Controllers\Malade\MaladeController::class, 'update'])->name('ajotuer.consultation');
     Route::get('/getDents', [App\Http\Controllers\Medecin\DentController::class, 'show'])->name('get.dents');
     Route::get('/getDents', [App\Http\Controllers\Medecin\DentController::class, 'show'])->name('get.dents');
     Route::post('/ajotuer_consultation', [App\Http\Controllers\Medecin\ConsultationController::class, 'store'])->name('ajotuer.consultation');
+    Route::get('/get_consultation/{id_malade}', [App\Http\Controllers\Medecin\ConsultationController::class, 'show'])->name('ajotuer.consultation');
+    Route::get('/get_dents_consultation/{id_malade}', [App\Http\Controllers\Medecin\ConsultationController::class, 'getDentsConsultation'])->name('get.dents.consultation');
 
 
 
