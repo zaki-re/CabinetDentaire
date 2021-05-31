@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MaladeCreateRequset extends FormRequest
+class ConsultationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,12 @@ class MaladeCreateRequset extends FormRequest
     public function rules()
     {
         return [
-            'antecedants'=>'nullable',
-            'nom' => '|string|max:50',
-            'prenom' => '|string|max:50',
-            'address' => 'nullable|string|max:50',
-            'mobile' => 'required|digits:10',
-            'age' => 'required|integer|between:1,100',
-
+            'id_malade'=>'required|integer',
+            'date_prochaine_rdv'=>'nullable|date',
+            'type_consultation'=>'string|required',
+            'soins'=>'string|required',
+            'versement'=>'integer|required',
+            'rest'=>'integer|required',
 
         ];
     }
