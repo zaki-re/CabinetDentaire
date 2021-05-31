@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Medecin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ConsultationRequest;
 use App\Models\Consultation;
 use App\Models\DentConsultation;
 use Carbon\Carbon;
@@ -37,7 +38,7 @@ class ConsultationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ConsultationRequest $request)
     {
        $consultation =  Consultation::create([
            'id_medecin'=>Auth::user()->id,

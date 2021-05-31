@@ -25,11 +25,11 @@ class ConsultationRequest extends FormRequest
     {
         return [
             'id_malade'=>'required|integer',
-            'date_prochaine_rdv'=>'nullable|string',
+            'date_prochaine_rdv'=>'nullable|date',
             'type_consultation'=>'string|required',
             'soins'=>'string|required',
-            'versement'=>'string|required',
-            'rest'=>'string|required',
+            'versement'=>'integer|required',
+            'rest'=>'integer|required',
 
         ];
     }

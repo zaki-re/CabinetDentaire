@@ -63,6 +63,7 @@
                                                 <p class="text-danger">
                                                     {{ prochaineRdvErrors }}
                                                 </p>
+
                                             </div>
                                             <label class="typo__label">Dents :</label>
                                             <multiselect v-model="dentsChoisi" tag-placeholder="Add this as new tag" placeholder="Ajouter Les dents traiter" label="numero" track-by="id" :options="dents" :multiple="true" :taggable="true" @tag="addTag"></multiselect>
@@ -274,14 +275,14 @@ export default {
               this.soinsErrors="";
               this.typeConsultationChoisiErrors="";
               this.versementErrors="";
-                  this.errors="";
+              this.errors="";
               this.restErrors="";
               this.prochaineRdvErrors="";
               $('#ajouterConsultation').modal('hide')
 
               Swal.fire(
-                  'Modifer !',
-                  "Le patient a été modifier avec succés",
+                  'Ajouter !',
+                  "La consutation a été ajouter avec succés",
                   'success'
               )
           }).catch((error)=>{
