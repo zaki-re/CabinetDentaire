@@ -9,6 +9,7 @@ Required software:
 - docker
 - docker compose
 - node
+- npm
 - yarn
 
 Optional software
@@ -42,7 +43,7 @@ Make sure you fill out your github token in order to pull from the spark repo
 
 Install node dependencies and run dev command:
 ```bash
-yarn && yarn dev
+npm install && npm run dev
 ```
 
 Migrate and seed the database:
